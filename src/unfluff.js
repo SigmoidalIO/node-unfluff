@@ -41,7 +41,8 @@ export default unfluff = function(html, language) {
   pageData.links = extractor.links(doc, topNode, lng);
   pageData.text = extractor.text(doc, topNode, lng);
 
-  pageData.pythonDate = PythonExtractor.date(html)
+  // no other way, because the entire API is synchronous
+  pageData.getPythonDate = async () => PythonExtractor.instance.findDate(html);
 
   return pageData;
 };
