@@ -7,7 +7,7 @@
 let unfluff;
 import cheerio from "cheerio";
 import extractor from "./extractor";
-import pythonextractor from "./pythonextractor";
+import PythonExtractor from "./pythonextractor";
 import cleaner from "./cleaner";
 
 export default unfluff = function(html, language) {
@@ -41,7 +41,7 @@ export default unfluff = function(html, language) {
   pageData.links = extractor.links(doc, topNode, lng);
   pageData.text = extractor.text(doc, topNode, lng);
 
-  pageData.pythonDate = pythonextractor.date(html)
+  pageData.pythonDate = PythonExtractor.date(html)
 
   return pageData;
 };

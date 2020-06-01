@@ -1,5 +1,12 @@
 //@flow
+const fs = require("fs");
 import pythonBridge from 'python-bridge';
+
+
+const PYTHON_SCRIPT = fs.readFile("./src/getDate.py", "utf8", function(error, data) {
+    if (error) throw error;
+    return data.toString();
+});
 
 class PythonAdapter {
     _py: pythonBridge.PythonBridge;
@@ -9,39 +16,21 @@ class PythonAdapter {
        //.     env: {PYTHONPATH: '/foo/bar'} 
         });
 
-        this._py.ex`
-            from htmldate import find_date
-            from lxml import html
+        this._py.ex(PYTHON_SCRIPT);
 
-            def getDate(htmldoc):
-                mytree = html.fromstring(htmldoc)
-
-                return find_date(mytree, outputformat='%Y-%m-%d %H:%M')
-        `
     }
 
-    async testFun(a,b) {
-        let tmp = this._py.ex
-        this._py.ex`
-            def add(a, b):
-                return a + b
-        `
-        let test = this._py`add(${a},${b})`
-        this._py.ex = tmp
-        return test
-    }
-
-    async find_date(htmldoc) {
-        return this._py`getDate(${htmldoc})`
+    async find_date(htmlDoc: string) {
+        return this._py`getDate(${htmlDoc})`;
     }
 
 }
 
-const python =  new PythonAdapter()
 
 export default {
     date(doc) {
-        return python.find_date(doc).then(x=>{console.log(`MAMY TO ${x}`); return x;})
+        const python = new PythonAdapter();
+        return python.find_date(doc).then(x=>{console.log(`MAMY TO ${x}`); return x;});
     }
 }
 
