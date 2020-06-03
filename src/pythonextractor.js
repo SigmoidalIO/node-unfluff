@@ -2,7 +2,15 @@
 import { readFileSync } from 'fs';
 import pythonBridge from 'python-bridge';
 
-const PYTHON_INIT_SCRIPT = readFileSync("./src/getDate.py", "utf-8");
+const PYTHON_INIT_SCRIPT = `
+from htmldate import find_date
+from lxml import html
+
+def getDate(htmldoc):
+    mytree = html.fromstring(htmldoc)
+
+    return find_date(mytree, outputformat='%Y-%m-%d %H:%M')
+`
 
 class PythonAdapter {
     static _instance: PythonAdapter;
