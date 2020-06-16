@@ -48,6 +48,7 @@
     "semver": "~4.3.2"
   },
   "scripts": {
+    "preinstall": "python3 -m pip install -r requirements.txt",
     "build": "babel src -d lib",
     "test": "./node_modules/.bin/babel-node ./node_modules/.bin/mocha --ui tdd test-setup.js test/**/*.js",
     "2date": "./node_modules/.bin/babel-node ./test/date_extractor.js",

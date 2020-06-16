@@ -1,6 +1,5 @@
 //@flow
-import { readFileSync } from 'fs';
-import pythonBridge from 'python-bridge';
+import PythonBridge from 'python-bridge';
 
 const PYTHON_INIT_SCRIPT = `
 from htmldate import find_date
@@ -17,7 +16,7 @@ class PythonAdapter {
     _py: pythonBridge.PythonBridge;
     _ready: boolean;
     constructor() {
-        this._py = pythonBridge({
+        this._py = new PythonBridge({
             python: 'python3',
        //.     env: {PYTHONPATH: '/foo/bar'} 
         });
@@ -26,7 +25,7 @@ class PythonAdapter {
     async init() {
         if (this._ready)
             return;
-        await this._py.ex(PYTHON_INIT_SCRIPT);
+        await this._py.ex([PYTHON_INIT_SCRIPT]);
         this._ready = true;
     }
 
