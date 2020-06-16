@@ -18,7 +18,6 @@ class PythonAdapter {
     constructor() {
         this._py = new PythonBridge({
             python: 'python3',
-       //.     env: {PYTHONPATH: '/foo/bar'} 
         });
     }
 
