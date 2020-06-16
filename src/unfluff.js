@@ -47,6 +47,10 @@ export default unfluff = function(html, language) {
   return pageData;
 };
 
+unfluff.destroy = function() {
+  return PythonExtractor.instance.destroy();
+}
+
 // Allow access to document properties with lazy evaluation
 unfluff.lazy = function(html, language) {
   return {
