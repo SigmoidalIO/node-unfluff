@@ -13,7 +13,7 @@ def getDate(htmldoc):
 
 class PythonAdapter {
     static _instance: PythonAdapter;
-    _py: pythonBridge.PythonBridge;
+    _py: PythonBridge.PythonBridge;
     _ready: boolean;
     constructor() {
         this._py = new PythonBridge({
@@ -31,6 +31,10 @@ class PythonAdapter {
     async findDate(htmlDoc: string) {
         await this.init();
         return this._py`getDate(${htmlDoc})`;
+    }
+
+    async destroy() {
+        await this._py.end();
     }
 
     static get instance() {
